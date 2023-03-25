@@ -2,14 +2,14 @@
   "expo": {
     "name": "Pessoa_H",
     "slug": "Pessoa_H",
-    "version": "1.0.0",
+    "version": "2.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/bmi.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/bmi_splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#111"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,12 +19,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/bmi_icon.png",
+        "backgroundColor": "#000"
+      },
+      "package": "com.otavio.rau.Pessoa_H"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0f7513de-8a94-4cd0-8193-fd111ea48c6e"
+      }
     }
   }
 }
