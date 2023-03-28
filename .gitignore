@@ -1,5 +1,9 @@
 node_modules/
+<<<<<<< Updated upstream
 node_modules.zip
+=======
+node_modules.*
+>>>>>>> Stashed changes
 .expo/
 dist/
 npm-debug.*

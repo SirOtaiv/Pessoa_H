@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import { Touchable, View, Text, StyleSheet, ScrollView } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, Pressable, ScrollView, Alert } from "react-native";
 import formulario from "../style/estiloForm";
 
-export default function PageHist() {
+export default function Pagehist() {
   return (
     <View style={pgHist.hsPage}>
-        <Touchable style={formulario.frmBotaoHist}>
+        <Pressable style={formulario.frmBotaoHist} onPress={() => alert('TITULO DIFERENTE')}>
           <Text style={formulario.frmTextoBotao}>Botao</Text>
-        </Touchable>
+        </Pressable>
         <ScrollView>  
           <View style={pgHist.hsList}>
-            <Text>Bem vindo a segunda tela</Text>
+            <Text>mdaiwldnlawndlanwdlanwduianwduoi\awbduia</Text>
           </View>
         </ScrollView>
     </View>
-  )
-}
+  );
+};
 
 const pgHist = StyleSheet.create({
   hsPage: {

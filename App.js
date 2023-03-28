@@ -3,8 +3,13 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, TextInput, Pressable, Modal } from 'react-native';
 import formulario from './src/style/estiloForm';
 import Title from './src/componentes/titulo';
+import Pagehist  from './src/pages/pagehist';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+function Main({navigation}) {
+
   const [altura, setAltura] = useState(null);
   const [peso, setPeso] = useState(null);
   const [nome, setNome] = useState(null);
@@ -61,13 +66,24 @@ export default function App() {
                     <Pressable onPress={() => validadorImc()} style={formulario.frmBotao}>
                         <Text style={formulario.frmTextoBotao}>Calcular</Text>
                     </Pressable>
-                    <Pressable style={formulario.frmBotao}>
+                    <Pressable style={formulario.frmBotao} onPress={() => navigation.navigate('Historico')}>
                         <Text style={formulario.frmTextoBotao}>Pagina 2</Text>
                     </Pressable>
                 </View>
             </View>
             {mdMessage()}
         </View>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='Home' component={Main} options={{headerShown: false}}/>
+        <Stack.Screen name='Historico' component={Pagehist}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   )};
   const styles = StyleSheet.create({
     container: {
@@ -116,5 +132,17 @@ export default function App() {
         fontSize: 25,
         fontWeight: 'bold',
         color: '#fff'
+    },
+  });
+  const pgHist = StyleSheet.create({
+    hsPage: {
+      flex: 1,
+      height: '100%',
+    },
+    hsList: {
+      alignItems: 'center',
+      height: '100%',
+      paddingTop: 10,
+      backgroundColor: 'white',
     },
   });
