@@ -1,12 +1,19 @@
-import React from "react";
-import { View, Text, StyleSheet, Pressable, ScrollView, Alert } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
 import formulario from "../style/estiloForm";
 
-export default function Pagehist() {
+export default function Pagehist({ route }) {
+  const usuario = route.params
+  const [pessoa, setPessoa] = useState(usuario.user.nome);
+
+  function alteraNome() {
+    setPessoa('Pessoa')
+    alert(pessoa)
+  }
   return (
     <View style={pgHist.hsPage}>
-        <Pressable style={formulario.frmBotaoHist} onPress={() => alert('TITULO DIFERENTE')}>
-          <Text style={formulario.frmTextoBotao}>Botao</Text>
+        <Pressable style={formulario.frmBotaoHist} onPress={() => alert(pessoa)}>
+          <Text style={formulario.frmTextoBotao}>Nome: {usuario.user.nome}</Text>
         </Pressable>
         <ScrollView>  
           <View style={pgHist.hsList}>
