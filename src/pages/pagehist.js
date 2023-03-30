@@ -4,20 +4,30 @@ import formulario from "../style/estiloForm";
 
 export default function Pagehist({ route }) {
   const usuario = route.params
-  const [pessoa, setPessoa] = useState(usuario.user.nome);
+  const [pessoa, setPessoa] = useState(usuario.nome);
 
-  function alteraNome() {
-    setPessoa('Pessoa')
-    alert(pessoa)
+  function log() {
+    console.log(usuario)
+    console.log(usuario.nome)
+    console.log(usuario.altura)
+    console.log(usuario.peso)
+    console.log(typeof(usuario.nome))
+    console.log(typeof(usuario.altura))
+    console.log(typeof(usuario.peso))
   }
   return (
     <View style={pgHist.hsPage}>
         <Pressable style={formulario.frmBotaoHist} onPress={() => alert(pessoa)}>
-          <Text style={formulario.frmTextoBotao}>Nome: {usuario.user.nome}</Text>
+          <Text style={formulario.frmTextoBotao}>Limpar pesquisa: {usuario.nome}</Text>
+        </Pressable>
+        <Pressable style={formulario.frmBotaoHist} onPress={() => log()}>
+          <Text style={formulario.frmTextoBotao}>Gerar Log</Text>
         </Pressable>
         <ScrollView>  
           <View style={pgHist.hsList}>
-            <Text>mdaiwldnlawndlanwdlanwduianwduoi\awbduia</Text>
+            <Text style={pgHist.hsItem}>Usuário: {usuario.nome}</Text>
+            <Text style={pgHist.hsItem}>Peso: {usuario.peso}</Text>
+            <Text style={pgHist.hsItem}>Altura: {usuario.altura}</Text>
           </View>
         </ScrollView>
     </View>
@@ -34,5 +44,13 @@ const pgHist = StyleSheet.create({
     height: '100%',
     paddingTop: 10,
     backgroundColor: 'white',
+  },
+  hsItem: {
+    fontSize: 20,
+    marginTop: 5,
+    width: '40%',
+    backgroundColor: 'red',
+    textAlign: 'center',
+    borderRadius: 20,
   },
 })

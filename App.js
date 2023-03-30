@@ -66,8 +66,8 @@ function Main({navigation}) {
                     <Pressable onPress={() => validadorImc()} style={formulario.frmBotao}>
                         <Text style={formulario.frmTextoBotao}>Calcular</Text>
                     </Pressable>
-                    <Pressable style={formulario.frmBotao} onPress={() => navigation.navigate('Historico', {user: {nome}})}>
-                        <Text style={formulario.frmTextoBotao}>Pagina 2</Text>
+                    <Pressable style={formulario.frmBotao} onPress={() => navigation.navigate('Historico', {nome, altura, peso})}>
+                        <Text style={formulario.frmTextoBotao}>Histórico</Text>
                     </Pressable>
                 </View>
             </View>
