@@ -6,6 +6,7 @@ import Title from './src/componentes/titulo';
 import Pagehist  from './src/pages/pagehist';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { addDados, baseData } from './src/componentes/database';
 
 const Stack = createNativeStackNavigator();
 function Main({navigation}) {
@@ -23,6 +24,7 @@ function Main({navigation}) {
   function validadorImc(){
     if (peso != null && altura != null) {
       imcCalculador()
+      showLog(nome, peso, altura, imc)
       mensagemIMC(nome+', seu IMC é:')                
       setPeso(null)
       setAltura(null)
@@ -69,11 +71,26 @@ function Main({navigation}) {
                     <Pressable style={formulario.frmBotao} onPress={() => navigation.navigate('Historico', {nome, altura, peso})}>
                         <Text style={formulario.frmTextoBotao}>Histórico</Text>
                     </Pressable>
+                    <Pressable style={formulario.frmBotao} onPress={() => showLog(nome, peso, altura, imc)}>
+                      <Text style={formulario.frmTextoBotao}>LISTAR DATABASE</Text>
+                    </Pressable>
                 </View>
             </View>
             {mdMessage()}
         </View>
   );
+}
+function showLog(dNome, dPeso, dAltura, dImc) {
+  console.log(dNome)
+  console.log(dPeso)
+  console.log(dAltura)
+  console.log(58.6)
+  addDados(dNome, dPeso, dAltura, 58.6)
+  baseData()
+}
+function addLog(dNome, dPeso, dAltura, dImc) {
+  addDados(dNome, dPeso, dAltura, dImc)
+  baseData()
 }
 
 export default function App() {
