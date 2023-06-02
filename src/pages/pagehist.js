@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
 import formulario from "../style/estiloForm";
+import { baseData, listarHist, addDados, rmvDados } from "../componentes/database";
 
 export default function Pagehist({ route }) {
   const usuario = route.params
@@ -15,12 +16,16 @@ export default function Pagehist({ route }) {
     console.log(typeof(usuario.altura))
     console.log(typeof(usuario.peso))
   }
+  function bdLog() {
+    //listarHist().then((resultado) => console.log(resultado))
+    baseData()
+  }
   return (
     <View style={pgHist.hsPage}>
-        <Pressable style={formulario.frmBotaoHist} onPress={() => alert(pessoa)}>
-          <Text style={formulario.frmTextoBotao}>Limpar pesquisa: {usuario.nome}</Text>
+        <Pressable style={formulario.frmBotaoHist} onPress={() => rmvDados()}>
+          <Text style={formulario.frmTextoBotao}>Limpar pesquisa</Text>
         </Pressable>
-        <Pressable style={formulario.frmBotaoHist} onPress={() => log()}>
+        <Pressable style={formulario.frmBotaoHist} onPress={() => bdLog()}>
           <Text style={formulario.frmTextoBotao}>Gerar Log</Text>
         </Pressable>
         <ScrollView>  
@@ -49,7 +54,6 @@ const pgHist = StyleSheet.create({
     fontSize: 20,
     marginTop: 5,
     width: '40%',
-    backgroundColor: 'red',
     textAlign: 'center',
     borderRadius: 20,
   },
