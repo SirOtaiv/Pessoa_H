@@ -1,38 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
 import formulario from "../style/estiloForm";
 import { baseData, listarHist, addDados, rmvDados } from "../componentes/database";
 
-export default function Pagehist({ route }) {
-  const usuario = route.params
-  const [pessoa, setPessoa] = useState(usuario.nome);
+export default function Pagehist() {
+  const [histLista, setHistLista] = useState([]);
+  
+  //Carregar a lista de historico
+  useEffect(() => bdList())
 
-  function log() {
-    console.log(usuario)
-    console.log(usuario.nome)
-    console.log(usuario.altura)
-    console.log(usuario.peso)
-    console.log(typeof(usuario.nome))
-    console.log(typeof(usuario.altura))
-    console.log(typeof(usuario.peso))
+  //Funcao para fazer o SELECT, e devolver o componente em lista
+  function bdList() {
+    listarHist().then((resultado) => {
+      const lista = resultado._array
+      const histo = new Array(resultado.length).fill(null).map((_,index) => <Historico nome={lista[index].nome} peso={lista[index].peso} altura={lista[index].altura} key={index}/>)
+      setHistLista(histo)
+    })
   }
-  function bdLog() {
-    //listarHist().then((resultado) => console.log(resultado))
-    baseData()
+
+  //Componente da lista
+  function Historico(props) {
+    return (
+      <View style={pgHist.hsBloco}>
+      <Text style={pgHist.hsItem}>{props.nome}</Text>
+      <Text style={pgHist.hsItem}>Peso: {props.peso}</Text>
+      <Text style={pgHist.hsItem}>Altura: {props.altura}</Text>
+      </View>
+    )
   }
+  
   return (
     <View style={pgHist.hsPage}>
         <Pressable style={formulario.frmBotaoHist} onPress={() => rmvDados()}>
           <Text style={formulario.frmTextoBotao}>Limpar pesquisa</Text>
         </Pressable>
-        <Pressable style={formulario.frmBotaoHist} onPress={() => bdLog()}>
-          <Text style={formulario.frmTextoBotao}>Gerar Log</Text>
-        </Pressable>
-        <ScrollView>  
+        <ScrollView>
           <View style={pgHist.hsList}>
-            <Text style={pgHist.hsItem}>Usuário: {usuario.nome}</Text>
-            <Text style={pgHist.hsItem}>Peso: {usuario.peso}</Text>
-            <Text style={pgHist.hsItem}>Altura: {usuario.altura}</Text>
+            {histLista}
           </View>
         </ScrollView>
     </View>
@@ -50,11 +54,19 @@ const pgHist = StyleSheet.create({
     paddingTop: 10,
     backgroundColor: 'white',
   },
+  hsBloco: {
+    marginTop: 10,
+    width: '90%',
+    borderBottomWidth: 1,
+    borderBottomColor: 'black',
+    alignItems: 'center',
+    backgroundColor: '#dbe1d9',
+    borderRadius: 20
+  },
   hsItem: {
     fontSize: 20,
     marginTop: 5,
-    width: '40%',
-    textAlign: 'center',
-    borderRadius: 20,
+    width: '80%',
+    textAlign: 'center'
   },
 })

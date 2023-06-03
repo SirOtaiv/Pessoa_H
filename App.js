@@ -20,18 +20,21 @@ function Main({navigation}) {
   const [modalText, setModalText] = useState('Você tem esse IMC:');
 
   //Função para criar o banco de dados se não existir, quando o app for carregado
-  useEffect(criarTabela())
+  useEffect(() => criarTabela())
 
   //Função de calcular o valor do IMC [var imc]
   function imcCalculador(){
     return setImc((peso/(altura*altura)).toFixed(2))
   }
+
   //Validar se todos os campos estão de acordo para a realização do cálculo de IMC
   function validadorImc(){
+
+    //Calculando o valor de imc e salvar no banco de dados
     if (peso != null && altura != null) {
       imcCalculador()
       let sImc = (peso/(altura*altura)).toFixed(2)
-      showLog(nome, peso, altura, sImc)
+      addDados(nome, peso, altura, sImc)
       mensagemIMC(nome+', seu IMC é:')                
       setPeso(null)
       setAltura(null)
@@ -42,11 +45,13 @@ function Main({navigation}) {
       setImc(null)
     }
   }
+
   //Alterar o conteúdo e visibilidade do modal em resposta positiva para o cálculo de IMC
   function mensagemIMC(conteudo) {
     setModalVisible(true)
     setModalText(conteudo)
   }
+
   //Componente modal de resposta
   function mdMessage() {
     return(
@@ -80,26 +85,11 @@ function Main({navigation}) {
                     <Pressable style={formulario.frmBotao} onPress={() => navigation.navigate('Historico', {nome, altura, peso})}>
                         <Text style={formulario.frmTextoBotao}>Histórico</Text>
                     </Pressable>
-                    <Pressable style={formulario.frmBotao} onPress={() => showLog(nome, peso, altura, imc)}>
-                      <Text style={formulario.frmTextoBotao}>LISTAR DATABASE</Text>
-                    </Pressable>
                 </View>
             </View>
             {mdMessage()}
         </View>
   );
-}
-function showLog(dNome, dPeso, dAltura, dImc) {
-  console.log(dNome)
-  console.log(dPeso)
-  console.log(dAltura)
-  console.log(dImc)
-  addDados(dNome, dPeso, dAltura, dImc)
-  baseData()
-}
-function addLog(dNome, dPeso, dAltura, dImc) {
-  addDados(dNome, dPeso, dAltura, dImc)
-  baseData()
 }
 
 export default function App() {
@@ -158,17 +148,5 @@ export default function App() {
         fontSize: 25,
         fontWeight: 'bold',
         color: '#fff'
-    },
-  });
-  const pgHist = StyleSheet.create({
-    hsPage: {
-      flex: 1,
-      height: '100%',
-    },
-    hsList: {
-      alignItems: 'center',
-      height: '100%',
-      paddingTop: 10,
-      backgroundColor: 'white',
     },
   });
