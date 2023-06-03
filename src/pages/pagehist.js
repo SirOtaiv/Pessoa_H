@@ -13,7 +13,7 @@ export default function Pagehist() {
   function bdList() {
     listarHist().then((resultado) => {
       const lista = resultado._array
-      const histo = new Array(resultado.length).fill(null).map((_,index) => <Historico nome={lista[index].nome} peso={lista[index].peso} altura={lista[index].altura} key={index}/>)
+      const histo = new Array(resultado.length).fill(null).map((_,index) => <Historico nome={lista[index].nome} peso={lista[index].peso} altura={lista[index].altura} imc={lista[index].imc} key={index}/>)
       setHistLista(histo)
     })
   }
@@ -25,10 +25,11 @@ export default function Pagehist() {
       <Text style={pgHist.hsItem}>{props.nome}</Text>
       <Text style={pgHist.hsItem}>Peso: {props.peso}</Text>
       <Text style={pgHist.hsItem}>Altura: {props.altura}</Text>
+      <Text style={pgHist.hsItem}>IMC: {props.imc}</Text>
       </View>
     )
   }
-  
+
   return (
     <View style={pgHist.hsPage}>
         <Pressable style={formulario.frmBotaoHist} onPress={() => rmvDados()}>
