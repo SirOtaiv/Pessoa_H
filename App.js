@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, TextInput, Pressable, Modal } from 'react-native';
 import formulario from './src/style/estiloForm';
@@ -6,10 +6,12 @@ import Title from './src/componentes/titulo';
 import Pagehist  from './src/pages/pagehist';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { addDados, baseData, criarTabela } from './src/componentes/database';
 
 const Stack = createNativeStackNavigator();
 function Main({navigation}) {
 
+  //Definição das variáveis
   const [altura, setAltura] = useState(null);
   const [peso, setPeso] = useState(null);
   const [nome, setNome] = useState(null);
@@ -17,12 +19,22 @@ function Main({navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalText, setModalText] = useState('Você tem esse IMC:');
 
+  //Função para criar o banco de dados se não existir, quando o app for carregado
+  useEffect(() => criarTabela())
+
+  //Função de calcular o valor do IMC [var imc]
   function imcCalculador(){
     return setImc((peso/(altura*altura)).toFixed(2))
   }
+
+  //Validar se todos os campos estão de acordo para a realização do cálculo de IMC
   function validadorImc(){
+
+    //Calculando o valor de imc e salvar no banco de dados
     if (peso != null && altura != null) {
       imcCalculador()
+      let sImc = (peso/(altura*altura)).toFixed(2)
+      addDados(nome, peso, altura, sImc)
       mensagemIMC(nome+', seu IMC é:')                
       setPeso(null)
       setAltura(null)
@@ -33,10 +45,14 @@ function Main({navigation}) {
       setImc(null)
     }
   }
+
+  //Alterar o conteúdo e visibilidade do modal em resposta positiva para o cálculo de IMC
   function mensagemIMC(conteudo) {
     setModalVisible(true)
     setModalText(conteudo)
   }
+
+  //Componente modal de resposta
   function mdMessage() {
     return(
         <Modal visible={modalVisible} animationType='fade' transparent={true}>
@@ -66,8 +82,8 @@ function Main({navigation}) {
                     <Pressable onPress={() => validadorImc()} style={formulario.frmBotao}>
                         <Text style={formulario.frmTextoBotao}>Calcular</Text>
                     </Pressable>
-                    <Pressable style={formulario.frmBotao} onPress={() => navigation.navigate('Historico')}>
-                        <Text style={formulario.frmTextoBotao}>Pagina 2</Text>
+                    <Pressable style={formulario.frmBotao} onPress={() => navigation.navigate('Historico', {nome, altura, peso})}>
+                        <Text style={formulario.frmTextoBotao}>Histórico</Text>
                     </Pressable>
                 </View>
             </View>
@@ -132,17 +148,5 @@ export default function App() {
         fontSize: 25,
         fontWeight: 'bold',
         color: '#fff'
-    },
-  });
-  const pgHist = StyleSheet.create({
-    hsPage: {
-      flex: 1,
-      height: '100%',
-    },
-    hsList: {
-      alignItems: 'center',
-      height: '100%',
-      paddingTop: 10,
-      backgroundColor: 'white',
     },
   });
