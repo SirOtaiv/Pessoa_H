@@ -35,7 +35,7 @@ function Main({navigation}) {
       imcCalculador()
       let sImc = (peso/(altura*altura)).toFixed(2)
       addDados(nome, peso, altura, sImc)
-      mensagemIMC(nome+', seu IMC é:')                
+      mensagemIMC(!nome ? nome : "Desconhecido" +', seu IMC é:')                
       setPeso(null)
       setAltura(null)
       setNome(null)
