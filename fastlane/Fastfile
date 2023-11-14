@@ -1,4 +1,0 @@
-desc "Montar as screenshots do aplicativo"
-lane :screenshot do
-    screengrab
-end
