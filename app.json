@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "Pessoa_H",
-    "slug": "Pessoa_H",
-    "version": "2.2.0",
+    "slug": "Pessoa H",
+    "version": "2.2.3",
     "orientation": "portrait",
     "icon": "./assets/bmi.png",
     "userInterfaceStyle": "dark",
