@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
 import formulario from "../style/estiloForm";
-import { baseData, listarHist, addDados, rmvDados } from "../componentes/database";
+import { listarHist, rmvDados } from "../componentes/database";
+import imcTabel from "../componentes/TableImc";
 
 export default function Pagehist() {
   const [histLista, setHistLista] = useState([]);
@@ -19,13 +20,13 @@ export default function Pagehist() {
   }
 
   //Componente da lista
-  function Historico(props) {
+  function Historico(historico) {
     return (
-      <View style={pgHist.hsBloco}>
-      <Text style={pgHist.hsItem}>{props.nome}</Text>
-      <Text style={pgHist.hsItem}>Peso: {props.peso}</Text>
-      <Text style={pgHist.hsItem}>Altura: {props.altura}</Text>
-      <Text style={pgHist.hsItem}>IMC: {props.imc}</Text>
+      <View style={{...pgHist.hsBloco, backgroundColor: imcTabel(historico.imc).colorBg}}>
+      <Text style={{...pgHist.hsItem, color: imcTabel(historico.imc).colorTxt}}>{historico.nome}</Text>
+      <Text style={{...pgHist.hsItem, color: imcTabel(historico.imc).colorTxt}}>Peso: {historico.peso}</Text>
+      <Text style={{...pgHist.hsItem, color: imcTabel(historico.imc).colorTxt}}>Altura: {historico.altura}</Text>
+      <Text style={{...pgHist.hsItem, color: imcTabel(historico.imc).colorTxt}}>IMC: {historico.imc}</Text>
       </View>
     )
   }
@@ -53,7 +54,6 @@ const pgHist = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     paddingTop: 10,
-    backgroundColor: 'white',
   },
   hsBloco: {
     marginTop: 10,
@@ -61,7 +61,6 @@ const pgHist = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'black',
     alignItems: 'center',
-    backgroundColor: '#dbe1d9',
     borderRadius: 20
   },
   hsItem: {

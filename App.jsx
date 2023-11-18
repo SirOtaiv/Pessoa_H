@@ -7,6 +7,7 @@ import Pagehist  from './src/pages/pagehist';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { addDados, criarTabela } from './src/componentes/database';
+import imcTabel from './src/componentes/TableImc';
 
 const Stack = createNativeStackNavigator();
 function Main({navigation}) {
@@ -25,47 +26,6 @@ function Main({navigation}) {
   //Função de calcular o valor do IMC [var imc]
   function imcCalculador(){
     return setImc((peso/(altura*altura)).toFixed(2))
-  }
-
-  //Const function para validar a classificação
-  const imcTabel = (imc) => {
-    if (imc >= 18.5 && imc < 30) {
-      return {
-        text: "Peso Normal",
-        colorBg: "#80bf66",
-        colorTxt: "#2d501e"
-      };
-    } else if (imc >= 30 && imc < 35) {
-      return {
-        text: "Excesso de Peso",
-        colorBg: "#fcbd16",
-        colorTxt: "#5e470b"
-      };
-    } else if (imc >= 30 && imc < 35) {
-      return {
-        text: "Obesidade Grau 1",
-        colorBg: "#df1f12",
-        colorTxt: "#500807"
-      };
-    } else if (imc >= 35 && imc < 40) {
-      return {
-        text: "Obesidade Grau 2",
-        colorBg: "#b21d17",
-        colorTxt: "#4a0a09"
-      };
-    } else if (imc >= 40) {
-      return {
-        text: "Obesidade Mórbida",
-        colorBg: "#801711",
-        colorTxt: "#e45c54"
-      };
-    } else {
-      return {
-        text: "Baixo Peso",
-        colorBg: "#1655fc",
-        colorTxt: "#072548"
-      }
-    }
   }
 
   //Validar se todos os campos estão de acordo para a realização do cálculo de IMC
