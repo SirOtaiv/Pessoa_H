@@ -17,7 +17,7 @@ export const addDados = (nome, peso, altura, imc) => {
 };
 
 export function rmvDados() {
-  return new Promise<SQLite.SQLResultSet>((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     dbCon.transaction((tx) => {
       tx.executeSql('DELETE FROM historico;', [], (_, resultado) => {
         resolve(resultado)
@@ -29,7 +29,7 @@ export function rmvDados() {
 }
 
 export const listarHist = () => {
-  return new Promise<SQLite.SQLResultSetRowList>((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     dbCon.transaction(tx => {
       tx.executeSql('SELECT * FROM historico;', [], (info,{rows}) => {
         resolve(rows);

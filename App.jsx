@@ -6,7 +6,7 @@ import Title from './src/componentes/titulo';
 import Pagehist  from './src/pages/pagehist';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { addDados, baseData, criarTabela } from './src/componentes/database';
+import { addDados, criarTabela } from './src/componentes/database';
 
 const Stack = createNativeStackNavigator();
 function Main({navigation}) {
@@ -27,6 +27,47 @@ function Main({navigation}) {
     return setImc((peso/(altura*altura)).toFixed(2))
   }
 
+  //Const function para validar a classificação
+  const imcTabel = (imc) => {
+    if (imc >= 18.5 && imc < 30) {
+      return {
+        text: "Peso Normal",
+        colorBg: "#80bf66",
+        colorTxt: "#2d501e"
+      };
+    } else if (imc >= 30 && imc < 35) {
+      return {
+        text: "Excesso de Peso",
+        colorBg: "#fcbd16",
+        colorTxt: "#5e470b"
+      };
+    } else if (imc >= 30 && imc < 35) {
+      return {
+        text: "Obesidade Grau 1",
+        colorBg: "#df1f12",
+        colorTxt: "#500807"
+      };
+    } else if (imc >= 35 && imc < 40) {
+      return {
+        text: "Obesidade Grau 2",
+        colorBg: "#b21d17",
+        colorTxt: "#4a0a09"
+      };
+    } else if (imc >= 40) {
+      return {
+        text: "Obesidade Mórbida",
+        colorBg: "#801711",
+        colorTxt: "#e45c54"
+      };
+    } else {
+      return {
+        text: "Baixo Peso",
+        colorBg: "#1655fc",
+        colorTxt: "#072548"
+      }
+    }
+  }
+
   //Validar se todos os campos estão de acordo para a realização do cálculo de IMC
   function validadorImc(){
 
@@ -35,7 +76,7 @@ function Main({navigation}) {
       imcCalculador()
       let sImc = (peso/(altura*altura)).toFixed(2)
       addDados(nome, peso, altura, sImc)
-      mensagemIMC(!nome ? nome : "Desconhecido" +', seu IMC é:')                
+      mensagemIMC(!!nome ? nome+', seu IMC é:' : "Desconhecido" +', seu IMC é:')                
       setPeso(null)
       setAltura(null)
       setNome(null)
@@ -59,7 +100,10 @@ function Main({navigation}) {
             <View style={styles.modalView}>
                 <View style={styles.modalMsg}>
                     <Text style={styles.modalMsgTxt}>{modalText}</Text>
-                    <Text style={styles.modalMsgTxtImc}>{imc}</Text>
+                    <View style={{height: 60, width: 120, backgroundColor: imcTabel(imc).colorBg, borderRadius: 20, alignItems: 'center', justifyContent: 'center'}}>
+                      <Text style={{...styles.modalMsgTxtImc, color: imcTabel(imc).colorTxt}}>{imc}</Text>
+                    </View>
+                    <Text style={styles.modalMsgTxt}>{imcTabel(imc).text}</Text>
                     <Pressable onPress={() => setModalVisible(false)} style={styles.modalMsgBtm}>
                         <Text style={styles.modalMsgBtmTxt}>Fechar</Text>
                     </Pressable>
@@ -142,7 +186,7 @@ export default function App() {
     modalMsgTxtImc: {
       fontSize: 30,
       fontWeight: 'bold',
-      color: 'red'
+      color: 'black'
     },
     modalMsgBtmTxt: {
         fontSize: 25,
