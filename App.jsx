@@ -30,17 +30,41 @@ function Main({navigation}) {
   //Const function para validar a classificação
   const imcTabel = (imc) => {
     if (imc >= 18.5 && imc < 30) {
-      return "Peso Normal";
+      return {
+        text: "Peso Normal",
+        colorBg: "#80bf66",
+        colorTxt: "#2d501e"
+      };
     } else if (imc >= 30 && imc < 35) {
-      return "Excesso de Peso";
+      return {
+        text: "Excesso de Peso",
+        colorBg: "#fcbd16",
+        colorTxt: "#5e470b"
+      };
     } else if (imc >= 30 && imc < 35) {
-      return "Obesidade Grau 1";
+      return {
+        text: "Obesidade Grau 1",
+        colorBg: "#df1f12",
+        colorTxt: "#500807"
+      };
     } else if (imc >= 35 && imc < 40) {
-      return "Obesidade Grau 2";
+      return {
+        text: "Obesidade Grau 2",
+        colorBg: "#b21d17",
+        colorTxt: "#4a0a09"
+      };
     } else if (imc >= 40) {
-      return "Obesidade Mórbida";
+      return {
+        text: "Obesidade Mórbida",
+        colorBg: "#801711",
+        colorTxt: "#e45c54"
+      };
     } else {
-      return "Baixo Peso"
+      return {
+        text: "Baixo Peso",
+        colorBg: "#1655fc",
+        colorTxt: "#072548"
+      }
     }
   }
 
@@ -76,8 +100,10 @@ function Main({navigation}) {
             <View style={styles.modalView}>
                 <View style={styles.modalMsg}>
                     <Text style={styles.modalMsgTxt}>{modalText}</Text>
-                    <Text style={styles.modalMsgTxtImc}>{imc}</Text>
-                    <Text style={styles.modalMsgTxt}>{imcTabel(imc)}</Text>
+                    <View style={{height: 60, width: 120, backgroundColor: imcTabel(imc).colorBg, borderRadius: 20, alignItems: 'center', justifyContent: 'center'}}>
+                      <Text style={{...styles.modalMsgTxtImc, color: imcTabel(imc).colorTxt}}>{imc}</Text>
+                    </View>
+                    <Text style={styles.modalMsgTxt}>{imcTabel(imc).text}</Text>
                     <Pressable onPress={() => setModalVisible(false)} style={styles.modalMsgBtm}>
                         <Text style={styles.modalMsgBtmTxt}>Fechar</Text>
                     </Pressable>
@@ -160,7 +186,7 @@ export default function App() {
     modalMsgTxtImc: {
       fontSize: 30,
       fontWeight: 'bold',
-      color: 'red'
+      color: 'black'
     },
     modalMsgBtmTxt: {
         fontSize: 25,
