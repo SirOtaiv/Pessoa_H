@@ -6,7 +6,7 @@ import Title from './src/componentes/titulo';
 import Pagehist  from './src/pages/pagehist';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { addDados, baseData, criarTabela } from './src/componentes/database';
+import { addDados, criarTabela } from './src/componentes/database';
 
 const Stack = createNativeStackNavigator();
 function Main({navigation}) {
@@ -27,6 +27,23 @@ function Main({navigation}) {
     return setImc((peso/(altura*altura)).toFixed(2))
   }
 
+  //Const function para validar a classificação
+  const imcTabel = (imc) => {
+    if (imc >= 18.5 && imc < 30) {
+      return "Peso Normal";
+    } else if (imc >= 30 && imc < 35) {
+      return "Excesso de Peso";
+    } else if (imc >= 30 && imc < 35) {
+      return "Obesidade Grau 1";
+    } else if (imc >= 35 && imc < 40) {
+      return "Obesidade Grau 2";
+    } else if (imc >= 40) {
+      return "Obesidade Mórbida";
+    } else {
+      return "Baixo Peso"
+    }
+  }
+
   //Validar se todos os campos estão de acordo para a realização do cálculo de IMC
   function validadorImc(){
 
@@ -35,7 +52,7 @@ function Main({navigation}) {
       imcCalculador()
       let sImc = (peso/(altura*altura)).toFixed(2)
       addDados(nome, peso, altura, sImc)
-      mensagemIMC(!!nome ? nome : "Desconhecido" +', seu IMC é:')                
+      mensagemIMC(!!nome ? nome+', seu IMC é:' : "Desconhecido" +', seu IMC é:')                
       setPeso(null)
       setAltura(null)
       setNome(null)
@@ -60,6 +77,7 @@ function Main({navigation}) {
                 <View style={styles.modalMsg}>
                     <Text style={styles.modalMsgTxt}>{modalText}</Text>
                     <Text style={styles.modalMsgTxtImc}>{imc}</Text>
+                    <Text style={styles.modalMsgTxt}>{imcTabel(imc)}</Text>
                     <Pressable onPress={() => setModalVisible(false)} style={styles.modalMsgBtm}>
                         <Text style={styles.modalMsgBtmTxt}>Fechar</Text>
                     </Pressable>
